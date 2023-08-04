@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-monogodb-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-monogodb
+  template:
+    metadata:
+      labels:
+        app: auth-monogodb
+    spec:
+      containers:
+        - name: auth-monogodb
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-monogodb-srv
+spec:
+  selector:
+    app: auth-monogodb
+  ports:
+    - name: auth-db
+      port: 27017
+      targetPort: 27017
