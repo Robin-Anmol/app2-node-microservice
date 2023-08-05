@@ -29,7 +29,7 @@ export default function App({
   return (
     <div className="w-full h-full">
       <Header currentUser={currentUser} />
-      <Component {...pageProps} />
+      <Component currentUser={currentUser} {...pageProps} />
     </div>
   );
 }

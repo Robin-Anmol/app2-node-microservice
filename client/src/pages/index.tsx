@@ -25,20 +25,3 @@ export default function LandingPage({ currentUser, errors }: LandingPageProps) {
     </main>
   );
 }
-
-LandingPage.getInitialProps = async (context: NextPageContext) => {
-  try {
-    const client = buildClient(context);
-    const response = await client.get("/api/users/currentuser");
-
-    return { currentUser: { ...response.data.currentUser } };
-  } catch (error) {
-    const axiosError = error as AxiosError<any>;
-    return {
-      errors: {
-        status: axiosError.response?.status || 500,
-        message: axiosError.message,
-      },
-    };
-  }
-};

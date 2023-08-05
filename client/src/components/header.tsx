@@ -26,7 +26,6 @@ const Header = ({ currentUser }: headerProps) => {
       <div className="flex ml-auto gap-4 h-full  ">
         {currentUser?.email && (
           <button
-            onClick={() => router.push("/auth")}
             className={`px-5 h-full    
                       transition-colors text-black border border-black
                 rounded-lg  shadow-sm`}
