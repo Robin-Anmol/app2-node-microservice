@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import Form from "@/components/form";
 import { useState } from "react";
-import { loginService } from "@/services";
+import { UserService } from "@/services";
+import { useRouter } from "next/router";
 export interface formdataProps {
   email: {
     value: string;
@@ -34,6 +35,7 @@ const AuthPage = () => {
   });
   const [formType, setFormType] = useState(formTypes.SignIn);
   const [errors, setErrors] = useState<Errors[]>([]);
+  const router = useRouter();
 
   const SubmitHanlder = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -50,7 +52,7 @@ const AuthPage = () => {
   };
 
   async function signin() {
-    const { response, errors } = await loginService.signIn({
+    const { response, errors } = await UserService.signIn({
       email: formdata.email.value,
       password: formdata.password.value,
     });
@@ -60,13 +62,13 @@ const AuthPage = () => {
     }
 
     if (response) {
+      router.push("/");
       clearState();
     }
   }
 
-  
   async function signup() {
-    const { response, errors } = await loginService.signUp({
+    const { response, errors } = await UserService.signUp({
       email: formdata.email.value,
       password: formdata.password.value,
     });
@@ -76,6 +78,7 @@ const AuthPage = () => {
     }
 
     if (response) {
+      router.push("/");
       clearState();
     }
   }

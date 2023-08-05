@@ -17,5 +17,13 @@ async function signIn(data: { email: string; password: string }) {
     return { errors: errors.response.data.errors };
   }
 }
+async function getCurrentUser() {
+  try {
+    const response = await axios.get(`/api/users/currentuser`);
+    return { response };
+  } catch (errors: any) {
+    return { errors: errors.response.data.errors };
+  }
+}
 
-export const loginService = { signUp, signIn };
+export const UserService = { signUp, signIn, getCurrentUser };

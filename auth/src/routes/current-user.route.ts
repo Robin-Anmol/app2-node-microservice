@@ -4,6 +4,6 @@ import { isAuthenticated } from "../middlewares/auth.middleware";
 
 const router = express.Router();
 
-router.get("/api/users/currentuser",isAuthenticated, getCurrentUser);
+router.get("/api/users/currentuser", isAuthenticated, getCurrentUser);
 
 export { router as currentUserRouter };
