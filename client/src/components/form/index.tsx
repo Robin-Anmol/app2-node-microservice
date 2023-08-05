@@ -18,7 +18,7 @@ const Form = ({
   return (
     <form
       onSubmit={SubmitHanlder}
-      className="w-[90%] lg:w-[30%] border flex flex-col rounded-md shadow-lg gap-6   p-7  border-black"
+      className="w-[90%] lg:w-[30%] border flex flex-col rounded-md shadow-xl gap-6   p-7  border-grey-500 "
     >
       <h1 className="text-3xl text-center font-medium">{formType}</h1>
       <InputField

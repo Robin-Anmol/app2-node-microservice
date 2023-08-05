@@ -13,11 +13,11 @@ export interface formdataProps {
     ErrorMessage?: string;
   };
 }
-enum formTypes {
+export enum formTypes {
   SignIn = "Sign In",
   SignUp = "Sign Up",
 }
-const formTypeData = [formTypes.SignIn, formTypes.SignUp];
+export const formTypeData = [formTypes.SignIn, formTypes.SignUp];
 
 export interface Errors {
   message: string;

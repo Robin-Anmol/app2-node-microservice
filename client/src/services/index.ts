@@ -25,5 +25,13 @@ async function getCurrentUser() {
     return { errors: errors.response.data.errors };
   }
 }
+async function logout() {
+  try {
+    const response = await axios.post(`/api/users/signout`);
+    return { response };
+  } catch (errors: any) {
+    return { errors: errors.response.data.errors };
+  }
+}
 
-export const UserService = { signUp, signIn, getCurrentUser };
+export const UserService = { signUp, signIn, getCurrentUser, logout };
