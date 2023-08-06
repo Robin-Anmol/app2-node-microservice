@@ -21,6 +21,7 @@ async function getTicketById(req: Request, res: Response, next: NextFunction) {
     next(error);
   }
 }
+
 async function updateTicketById(
   req: Request,
   res: Response,
@@ -47,8 +48,12 @@ async function updateTicketById(
           title,
           price,
         },
+      },
+      {
+        returnDocument: "after",
       }
     );
+    console.log(updateTicket);
 
     res.status(200).json(updateTicket);
   } catch (error) {

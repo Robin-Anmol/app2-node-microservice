@@ -15,13 +15,13 @@ router
       body("title")
         .isString()
         .notEmpty()
+        .trim()
         .withMessage("title is invalid. it should be a string "),
       body("price")
         .isFloat({ gt: 0 })
         .notEmpty()
-        .withMessage(
-          "price is invalid. it should be a number. it should be greater than 0. "
-        ),
+        .trim()
+        .withMessage("price is invalid. it should be a number "),
     ],
     validateRequest,
     CreateTicketHandler
