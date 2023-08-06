@@ -49,7 +49,7 @@ const Header = ({ currentUser }: headerProps) => {
                        hover:bg-purple-700 transition-colors text-white bg-purple-500
                 rounded-lg  shadow-sm`}
           >
-            Sign In
+            Get Started
           </button>
         )}
       </div>

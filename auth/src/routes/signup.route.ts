@@ -1,8 +1,7 @@
 import express, { Response, Request } from "express";
-import { body, validationResult } from "express-validator";
-import { DatabaseConnectionError } from "../errors/database-connecttion-error";
+import { body } from "express-validator";
+import { validateRequest } from "@robinanmol/common";
 import { signupHandler } from "../controllers/singup.controller";
-import { validateRequest } from "../middlewares/validate-request";
 
 const router = express.Router();
 

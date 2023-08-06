@@ -1,7 +1,7 @@
 import express from "express";
 import { singinHandler } from "../controllers/signin.controller";
-import { body, validationResult } from "express-validator";
-import { validateRequest } from "../middlewares/validate-request";
+import { body } from "express-validator";
+import { validateRequest } from "@robinanmol/common";
 
 const router = express.Router();
 

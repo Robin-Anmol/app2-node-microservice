@@ -2,13 +2,10 @@ import express from "express";
 import "express-async-errors";
 import { json } from "body-parser";
 import morgan from "morgan";
-import { currentUserRouter } from "./routes/current-user.route";
-import { signoutRouter } from "./routes/signout.route";
-import { signinRouter } from "./routes/signin.route";
-import { signupRouter } from "./routes/signup.route";
-import { ErrorHandler, NotFoundError } from "@robinanmol/common";
 
 import cookieSession from "cookie-session";
+import { TicketRouter } from "./routes/ticket";
+import { NotFoundError, ErrorHandler } from "@robinanmol/common";
 
 const app = express();
 app.set("trust proxy", true);
@@ -21,10 +18,9 @@ app.use(
   })
 );
 
-app.use(signinRouter);
-app.use(signupRouter);
-app.use(currentUserRouter);
-app.use(signoutRouter);
+// tickets service routes
+
+app.use("/api/", TicketRouter);
 
 app.all("*", async (req, res) => {
   throw new NotFoundError();
