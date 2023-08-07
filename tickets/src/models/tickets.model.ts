@@ -37,7 +37,6 @@ const TicketsSchema = new mongoose.Schema<TicketsAttrs>(
         ret.id = ret._id;
         delete ret._id;
       },
-      versionKey: false,
     },
   }
 );
