@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import { app } from "../app";
 import request from "supertest";
 import jwt from "jsonwebtoken";
+jest.mock("../nats-client");
+
 let mongo: any;
 declare global {
   var signin: () => string[];
@@ -16,6 +18,7 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
+  jest.clearAllMocks();
   const collections = await mongoose.connection.db.collections();
   for (let collection of collections) {
     await collection.deleteMany({});

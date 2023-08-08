@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import nats, { Stan } from "node-nats-streaming";
 
 class NatsClient {
-  readonly instanceId = new mongoose.Types.ObjectId().toHexString();
   private _client?: Stan;
   get client() {
     if (!this._client) {
@@ -11,8 +10,8 @@ class NatsClient {
     return this._client;
   }
 
-  connect(clusterId: string, url: string) {
-    this._client = nats.connect(clusterId, this.instanceId, {
+  connect(clusterId: string, instanceId: string, url: string) {
+    this._client = nats.connect(clusterId, instanceId, {
       url,
     });
     return new Promise<void>((resolve, reject) => {
