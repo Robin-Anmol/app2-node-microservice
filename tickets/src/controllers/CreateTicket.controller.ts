@@ -14,7 +14,7 @@ async function CreateTicketController(
     const ticket = await Tickets.create({ title, price, userId: req.user?.id });
 
     const publisher = new TicketCreatedPublisher(natsClient.client);
-    // event publish 
+    // event publish
     await publisher.publish({
       id: ticket.id,
       title: ticket.title,

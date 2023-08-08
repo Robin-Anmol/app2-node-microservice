@@ -1,6 +1,7 @@
 import request from "supertest";
 import { app } from "../../app";
 import mongoose from "mongoose";
+import { natsClient } from "../../nats-client";
 
 it("returns a 404 if the ticket id does not exist", async () => {
   const title = "developer community meetup";
@@ -161,4 +162,69 @@ it("returns  a 200  if the user provides an valid title or price ", async () => 
 
   expect(getTicket.body.title).toEqual(title);
   expect(getTicket.body.price).toEqual(price);
+});
+
+it("publish ticket update event", async () => {
+  const cookie = global.signin();
+  let title = "developer community meetup";
+  let price = 100;
+  const ticket = await request(app)
+    .post("/api/tickets")
+    .set("Cookie", cookie)
+    .send({
+      title,
+      price,
+    })
+    .expect(201);
+
+  // by title
+  title = "new update title";
+
+  await request(app)
+    .patch(`/api/tickets/${ticket.body.id}`)
+    .set("Cookie", cookie)
+    .send({
+      title,
+    })
+    .expect(200);
+
+  let getTicket = await request(app)
+    .get(`/api/tickets/${ticket.body.id}`)
+    .expect(200);
+  expect(getTicket.body.title).toEqual(title);
+
+  //   by price
+  price = 900;
+
+  await request(app)
+    .patch(`/api/tickets/${ticket.body.id}`)
+    .set("Cookie", cookie)
+    .send({
+      price,
+    })
+    .expect(200);
+
+  getTicket = await request(app)
+    .get(`/api/tickets/${ticket.body.id}`)
+    .expect(200);
+  expect(getTicket.body.price).toEqual(price);
+
+  //   update by both
+  title = "this is valid title";
+  price = 20000;
+
+  await request(app)
+    .patch(`/api/tickets/${ticket.body.id}`)
+    .set("Cookie", cookie)
+    .send({
+      title,
+      price,
+    })
+    .expect(200);
+
+  getTicket = await request(app)
+    .get(`/api/tickets/${ticket.body.id}`)
+    .expect(200);
+
+  expect(natsClient.client.publish).toHaveBeenCalled();
 });

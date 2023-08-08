@@ -5,6 +5,8 @@ import {
   NotFoundError,
   UnauthorizedError,
 } from "@robinanmol/common";
+import { TicketUpdatedPublisher } from "../events/publisher/ticket-updated-publisher";
+import { natsClient } from "../nats-client";
 
 async function getTicketById(req: Request, res: Response, next: NextFunction) {
   const { ticketId } = req.params;
@@ -53,6 +55,16 @@ async function updateTicketById(
         returnDocument: "after",
       }
     );
+
+    const publisher = new TicketUpdatedPublisher(natsClient.client);
+    // event publish
+    await publisher.publish({
+      id: updateTicket!.id,
+      title: updateTicket!.title,
+      price: updateTicket!.price,
+      userId: updateTicket!.userId,
+    });
+
     console.log(updateTicket);
 
     res.status(200).json(updateTicket);
