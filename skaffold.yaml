@@ -23,6 +23,14 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
+    - image: robinanmol/orders
+      context: order
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
     - image: robinanmol/client
       context: client
       docker:
