@@ -92,5 +92,4 @@ it("publishes an event", async () => {
     .expect(201);
 
   expect(natsClient.client.publish).toHaveBeenCalled();
-  console.log(natsClient);
 });

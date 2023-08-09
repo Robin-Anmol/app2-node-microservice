@@ -20,6 +20,7 @@ it("returns an error if the ticket does not exist", async () => {
 it("returns an error status 400 if the ticket is already been reserved", async () => {
   const ticket = await Ticket.create({
     title: "developer meetup",
+    id: new mongoose.Types.ObjectId().toHexString(),
     price: 200,
   });
 
@@ -42,6 +43,7 @@ it("returns an error status 400 if the ticket is already been reserved", async (
 it("returns an  reserved ticket", async () => {
   const ticket = await Ticket.create({
     title: "developer meetup",
+    id: new mongoose.Types.ObjectId().toHexString(),
     price: 200,
   });
 
@@ -57,6 +59,7 @@ it("returns an  reserved ticket", async () => {
 it("emits a order created event", async () => {
   const ticket = await Ticket.create({
     title: "developer meetup",
+    id: new mongoose.Types.ObjectId().toHexString(),
     price: 200,
   });
 

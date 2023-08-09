@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import { app } from "./app";
 import { natsClient } from "./nats-client";
+import { TicketCreatedListener } from "./events/listener/ticket.created.listener";
+import { TicketUpdatedListener } from "./events/listener/ticket.updated.listener";
 const start = async () => {
   if (!process.env.JWT_KEY) {
     throw new Error("JWT_KEY is  required");
@@ -27,6 +29,8 @@ const start = async () => {
     process.on("SIGINT", () => natsClient.client.close());
     process.on("SIGTERM", () => natsClient.client.close());
 
+    new TicketCreatedListener(natsClient.client).listen();
+    new TicketUpdatedListener(natsClient.client).listen();
     await mongoose.connect(process.env.MONGO_URI);
     console.log("connected to MongoDB");
   } catch (err) {

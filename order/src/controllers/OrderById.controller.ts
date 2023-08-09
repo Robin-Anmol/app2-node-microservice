@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { Orders, OrderStatus } from "../models/order.model";
 import { NotFoundError, UnauthorizedError } from "@robinanmol/common";
-import { OrderCancelledPublisher } from "../events/publisher/order.cancelled.publisher";
 import { natsClient } from "../nats-client";
+import { OrderCancelledPublisher } from "../events/publisher/order.cancelled.publisher";
 
 async function getOrderById(req: Request, res: Response, next: NextFunction) {
   const { orderId } = req.params;
@@ -29,7 +29,7 @@ async function deleteOrderById(
 ) {
   const { orderId } = req.params;
   try {
-    const order = await Orders.findById(orderId).populate("ticket");
+    const order = await Orders.findById(orderId);
 
     if (!order) {
       throw new NotFoundError();
@@ -38,18 +38,34 @@ async function deleteOrderById(
     if (order.userId !== req.user?.id) {
       throw new UnauthorizedError();
     }
-    order.status = OrderStatus.Cancelled;
-    await order.save();
+
+    const updateOrder = await Orders.findOneAndUpdate(
+      { _id: orderId, userId: req.user?.id },
+      {
+        $set: {
+          status: OrderStatus.Cancelled,
+        },
+        $inc: {
+          version: 1,
+        },
+      },
+      {
+        new: true,
+        returnDocument: "after",
+      }
+    ).populate("ticket");
+
     // publish an event saying the order has been deleted or cancelled
     const publisher = new OrderCancelledPublisher(natsClient.client);
     await publisher.publish({
-      id: order.id,
+      id: updateOrder!.id,
+      version: updateOrder!.version,
       ticket: {
-        id: order.ticket.id,
+        id: updateOrder!.ticket.id,
       },
     });
 
-    res.status(204).json(order);
+    res.status(204).json(updateOrder);
   } catch (err) {
     next(err);
   }

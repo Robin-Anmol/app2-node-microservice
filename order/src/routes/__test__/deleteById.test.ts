@@ -3,9 +3,10 @@ import { Ticket } from "../../models/ticket.model";
 import { OrderStatus, Orders } from "../../models/order.model";
 import { app } from "../../app";
 import { natsClient } from "../../nats-client";
+import mongoose from "mongoose";
 
 it("delete the order", async () => {
-  const ticket = await Ticket.create({
+  const ticket = await Ticket.create({  id: new mongoose.Types.ObjectId().toHexString(),
     title: `ticket 1`,
     price: 100,
   });
@@ -28,9 +29,10 @@ it("delete the order", async () => {
   const deletedOrder = await Orders.findById(order.id);
   expect(deletedOrder?.status).toEqual(OrderStatus.Cancelled);
 });
+
 it("emits the order cancelled event ", async () => {
   const ticket = await Ticket.create({
-    title: `ticket 1`,
+    title: `ticket 1`,  id: new mongoose.Types.ObjectId().toHexString(),
     price: 100,
   });
 
@@ -50,6 +52,7 @@ it("emits the order cancelled event ", async () => {
     .expect(204);
 
   const deletedOrder = await Orders.findById(order.id);
+  expect(deletedOrder?.version).not.toEqual(order.version);
   expect(deletedOrder?.status).toEqual(OrderStatus.Cancelled);
   expect(natsClient.client.publish).toHaveBeenCalled();
 });

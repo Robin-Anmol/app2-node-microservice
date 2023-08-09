@@ -17,6 +17,7 @@ interface OrdersDoc extends mongoose.Document {
   status: OrderStatus;
   expiresAt: Date;
   ticket: TicketDoc;
+  version: number;
   //   createdAt: string;
   //   updatedAt: string;
 }
@@ -52,6 +53,7 @@ const OrdersSchema = new mongoose.Schema<OrdersAttrs>(
   }
 );
 
+OrdersSchema.set("versionKey", "version");
 OrdersSchema.statics.build = (attrs: OrdersAttrs) => {
   return new Orders(attrs);
 };

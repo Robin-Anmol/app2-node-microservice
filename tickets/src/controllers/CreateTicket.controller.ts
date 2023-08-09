@@ -20,6 +20,7 @@ async function CreateTicketController(
       title: ticket.title,
       price: ticket.price,
       userId: ticket.userId,
+      version: ticket.version,
     });
 
     res.status(201).json(ticket);

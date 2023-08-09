@@ -50,8 +50,12 @@ async function updateTicketById(
           title,
           price,
         },
+        $inc: {
+          version: 1,
+        },
       },
       {
+        new: true,
         returnDocument: "after",
       }
     );
@@ -63,9 +67,8 @@ async function updateTicketById(
       title: updateTicket!.title,
       price: updateTicket!.price,
       userId: updateTicket!.userId,
+      version: updateTicket!.version,
     });
-
-    console.log(updateTicket);
 
     res.status(200).json(updateTicket);
   } catch (error) {
