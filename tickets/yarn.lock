@@ -981,10 +981,10 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@robinanmol/common@^1.2.5":
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/@robinanmol/common/-/common-1.2.5.tgz#29e771fa22847d18ac1f7044fadf7756669d302c"
-  integrity sha512-R9lUdOVTJrd8P+6gUYBuDl2+FVDydAIRX64SN5adFKl+yjzIFGmBZjVbJFE6Sd//gL4DszkqE9VCaRr7MhSEYA==
+"@robinanmol/common@^1.2.6":
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/@robinanmol/common/-/common-1.2.6.tgz#deb7e6e5ae769cef7508fa5e6822e745ffcea049"
+  integrity sha512-7QFF1+twfTC9aSYwyJ4eeFuM+//iDm8RUaYterIsAOx1YoK9y6FHA1o6seH6wabj67L/4CPioMLzLnsa2BmB8A==
   dependencies:
     "@types/cookie-session" "^2.0.44"
     "@types/express" "^4.17.17"

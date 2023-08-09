@@ -5,6 +5,7 @@ interface TicketsAttrs {
   title: string;
   price: number;
   userId: string;
+  orderId?: string;
 }
 
 interface TicketsModel extends mongoose.Model<TicketsDoc> {
@@ -16,6 +17,7 @@ interface TicketsDoc extends mongoose.Document {
   price: number;
   userId: string;
   version: number;
+  orderId?: string;
   //   createdAt: string;
   //   updatedAt: string;
 }
@@ -32,6 +34,9 @@ const TicketsSchema = new mongoose.Schema<TicketsAttrs>(
     userId: {
       type: String,
       required: true,
+    },
+    orderId: {
+      type: String,
     },
   },
   {

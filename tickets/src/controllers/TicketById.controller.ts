@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { Tickets } from "../models/tickets.model";
 import {
+  BadRequestError,
   CustomError,
   NotFoundError,
   UnauthorizedError,
@@ -33,9 +34,12 @@ async function updateTicketById(
   const { title, price } = req.body;
   try {
     const isTicketExit = await Tickets.findOne({ _id: ticketId });
-
     if (!isTicketExit) {
       throw new NotFoundError();
+    }
+
+    if (isTicketExit.orderId) {
+      throw new BadRequestError("ticket is reserved.");
     }
 
     if (isTicketExit.userId !== req.user?.id) {
