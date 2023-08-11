@@ -3,6 +3,7 @@ import { app } from "./app";
 import { natsClient } from "./nats-client";
 import { TicketCreatedListener } from "./events/listener/ticket.created.listener";
 import { TicketUpdatedListener } from "./events/listener/ticket.updated.listener";
+import { ExpirationCompleteListener } from "./events/listener/expiration.complete.listener";
 const start = async () => {
   if (!process.env.JWT_KEY) {
     throw new Error("JWT_KEY is  required");
@@ -31,6 +32,7 @@ const start = async () => {
 
     new TicketCreatedListener(natsClient.client).listen();
     new TicketUpdatedListener(natsClient.client).listen();
+    new ExpirationCompleteListener(natsClient.client).listen();
     await mongoose.connect(process.env.MONGO_URI);
     console.log("connected to MongoDB");
   } catch (err) {

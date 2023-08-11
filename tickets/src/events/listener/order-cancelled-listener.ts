@@ -9,6 +9,7 @@ export class OrderCancelledListener extends Listener<OrderCancelledEvent> {
   readonly QueueGroupName = queueGroupName;
   async onMessage(data: OrderCancelledEvent["data"], msg: Message) {
     // find the ticket the order is reserving
+    console.log(data);
 
     const ticket = await Tickets.findById(data.ticket.id);
     // if not ticket  throw an error
