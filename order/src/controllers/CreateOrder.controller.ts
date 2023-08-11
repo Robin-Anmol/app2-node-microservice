@@ -9,7 +9,7 @@ import {
 import { OrderCreatedPublisher } from "../events/publisher/order.created.publisher";
 import { natsClient } from "../nats-client";
 
-const EXPIRATION_WINDOW_TIME = 20;
+const EXPIRATION_WINDOW_TIME = 5 * 60;
 async function CreateOrderController(
   req: Request,
   res: Response,
