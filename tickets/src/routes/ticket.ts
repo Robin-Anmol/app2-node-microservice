@@ -16,12 +16,12 @@ router
         .isString()
         .notEmpty()
         .trim()
-        .withMessage("title is invalid. it should be a string "),
+        .withMessage("title is required. it should be a string "),
       body("price")
         .isFloat({ gt: 0 })
         .notEmpty()
         .trim()
-        .withMessage("price is invalid. it should be a number "),
+        .withMessage("price is required. it should be a number "),
     ],
     validateRequest,
     CreateTicketHandler

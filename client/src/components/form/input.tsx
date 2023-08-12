@@ -1,17 +1,18 @@
 import { formdataProps } from "@/pages/auth";
+import { ticketformdataProps } from "@/pages/tickets";
 import React, { SetStateAction } from "react";
 
-interface InputFieldProps {
-  setFormData: React.Dispatch<SetStateAction<formdataProps>>;
-  value: string;
+interface InputFieldProps<T extends Object> {
+  setFormData: React.Dispatch<SetStateAction<T>>;
+  value: string | number;
   error?: string;
   label: string;
   name: string;
   placeholder?: string;
-  type: "email" | "password" | "text";
+  type: "email" | "password" | "text" | "number";
 }
 
-const InputField = ({
+const InputField = <T extends Object>({
   setFormData,
   value,
   error,
@@ -19,9 +20,9 @@ const InputField = ({
   type,
   name,
   placeholder,
-}: InputFieldProps) => {
+}: InputFieldProps<T>) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e);
+    // console.log(e);
     setFormData((prev) => {
       return {
         ...prev,
@@ -34,7 +35,7 @@ const InputField = ({
   };
   return (
     <div className="text-lg flex flex-col  ">
-      <label htmlFor={label} className="text-xl">
+      <label htmlFor={label} className="text-xl text-gray-700">
         {label}
       </label>
       <input
@@ -43,7 +44,7 @@ const InputField = ({
         value={value}
         id={label}
         placeholder={placeholder}
-        className={`border mt-3 ${
+        className={`border mt-3 placeholder:text-gray-400 ${
           error ? "border-red-500" : "border-black"
         } py-2 px-3 text-xl rounded-lg`}
         type={type}

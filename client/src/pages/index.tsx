@@ -25,3 +25,8 @@ export default function LandingPage({ currentUser, errors }: LandingPageProps) {
     </main>
   );
 }
+
+LandingPage.getInitialProps = async () => {
+
+  
+};
