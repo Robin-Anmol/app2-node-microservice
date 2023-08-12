@@ -1,0 +1,22 @@
+name: auth-deployment
+
+on:
+  push:
+    branches:
+      -  master
+    paths:
+      - 'auth/**'
+
+jobs:
+ build:
+   runs-on: ubuntu-latest
+   steps:
+     - uses: actions/checkout@v3
+     -  run: cd auth && docker build -t robinanmol/auth .
+     -  run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+        env:
+          DOCKER_USER: ${{secrets.DOCKER_USER}}
+          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+     -  run: docker push robinanmol/auth     
+       
+      
