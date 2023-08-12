@@ -93,8 +93,6 @@ const AuthPage = () => {
   useEffect(() => {
     errors.map((err: Errors) => {
       setFormData((prev) => {
-        // console.log(prev);
-        // console.log(err);
         return {
           ...prev,
           [err.field]: {

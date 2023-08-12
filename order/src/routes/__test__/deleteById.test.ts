@@ -6,7 +6,8 @@ import { natsClient } from "../../nats-client";
 import mongoose from "mongoose";
 
 it("delete the order", async () => {
-  const ticket = await Ticket.create({  id: new mongoose.Types.ObjectId().toHexString(),
+  const ticket = await Ticket.create({
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: `ticket 1`,
     price: 100,
   });
@@ -22,7 +23,7 @@ it("delete the order", async () => {
     .expect(201);
 
   await request(app)
-    .delete(`/api/orders/${order.id}`)
+    .patch(`/api/orders/${order.id}`)
     .set("Cookie", cookie)
     .expect(204);
 
@@ -32,7 +33,8 @@ it("delete the order", async () => {
 
 it("emits the order cancelled event ", async () => {
   const ticket = await Ticket.create({
-    title: `ticket 1`,  id: new mongoose.Types.ObjectId().toHexString(),
+    title: `ticket 1`,
+    id: new mongoose.Types.ObjectId().toHexString(),
     price: 100,
   });
 
@@ -47,7 +49,7 @@ it("emits the order cancelled event ", async () => {
     .expect(201);
 
   await request(app)
-    .delete(`/api/orders/${order.id}`)
+    .patch(`/api/orders/${order.id}`)
     .set("Cookie", cookie)
     .expect(204);
 
