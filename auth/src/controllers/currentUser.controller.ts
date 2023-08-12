@@ -3,6 +3,7 @@ import { User } from "../models/user.model";
 import { UnauthorizedError } from "@robinanmol/common";
 
 async function getCurrentUser(req: Request, res: Response, next: NextFunction) {
+  console.log(req.user!.id);
   try {
     const user = await User.findById(req.user!.id);
 
