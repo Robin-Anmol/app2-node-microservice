@@ -2,7 +2,8 @@ name: payment-tests
 
 on:
   pull_request:
-
+    paths:
+      - "payment/**"
 jobs:
   build:
     runs-on: ubuntu-latest
