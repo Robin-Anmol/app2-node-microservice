@@ -29,8 +29,8 @@ async function cancelledOrderById(
 ) {
   const { orderId } = req.params;
   try {
+    console.log(orderId);
     const order = await Orders.findById(orderId);
-
     if (!order) {
       throw new NotFoundError();
     }
