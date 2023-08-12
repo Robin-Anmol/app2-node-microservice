@@ -10,6 +10,7 @@ interface InputFieldProps<T extends Object> {
   name: string;
   placeholder?: string;
   type: "email" | "password" | "text" | "number";
+  blurHandler?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 const InputField = <T extends Object>({
@@ -20,6 +21,7 @@ const InputField = <T extends Object>({
   type,
   name,
   placeholder,
+  blurHandler,
 }: InputFieldProps<T>) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // console.log(e);
@@ -43,6 +45,7 @@ const InputField = <T extends Object>({
         name={name}
         value={value}
         id={label}
+        onBlur={blurHandler}
         placeholder={placeholder}
         className={`border mt-3 placeholder:text-gray-400 ${
           error ? "border-red-500" : "border-black"

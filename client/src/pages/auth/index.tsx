@@ -62,8 +62,8 @@ const AuthPage = () => {
     }
 
     if (response) {
-      router.push("/");
       clearState();
+      redirectRoute();
     }
   }
 
@@ -78,9 +78,16 @@ const AuthPage = () => {
     }
 
     if (response) {
-      router.push("/");
       clearState();
+      redirectRoute();
     }
+  }
+
+  function redirectRoute() {
+    if (router.query.redirect) {
+      return router.replace(`/${router.query.redirect}`);
+    }
+    return router.replace("/");
   }
 
   useEffect(() => {

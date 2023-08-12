@@ -22,7 +22,7 @@ async function getOrderById(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-async function deleteOrderById(
+async function cancelledOrderById(
   req: Request,
   res: Response,
   next: NextFunction
@@ -65,10 +65,10 @@ async function deleteOrderById(
       },
     });
 
-    res.status(204).json(updateOrder);
+    res.status(204).json();
   } catch (err) {
     next(err);
   }
 }
 
-export const getOrderByIdController = { getOrderById, deleteOrderById };
+export const getOrderByIdController = { getOrderById, cancelledOrderById };

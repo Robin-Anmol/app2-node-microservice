@@ -8,8 +8,31 @@ interface FormProps {
   setFormData: React.Dispatch<SetStateAction<ticketformdataProps>>;
   SubmitHanlder: React.FormEventHandler<HTMLFormElement>;
   //   errors: Errors[];
+  btnText: string;
 }
-const TicketForm = ({ formdata, setFormData, SubmitHanlder }: FormProps) => {
+const TicketForm = ({
+  formdata,
+  setFormData,
+  SubmitHanlder,
+
+  btnText,
+}: FormProps) => {
+  const blurHandler = (e: React.FocusEvent<HTMLInputElement>) => {
+    // console.log(e);
+    const value = parseFloat(e.target.value);
+    if (isNaN(value)) {
+      return;
+    }
+    setFormData((prev) => {
+      return {
+        ...prev,
+        [e.target.name]: {
+          ErrorMessage: "",
+          value: value.toFixed(2),
+        },
+      };
+    });
+  };
   return (
     <form
       onSubmit={SubmitHanlder}
@@ -29,6 +52,7 @@ const TicketForm = ({ formdata, setFormData, SubmitHanlder }: FormProps) => {
         label="Price for Ticket"
         type="number"
         name="price"
+        blurHandler={blurHandler}
         placeholder="ex: 300"
         value={formdata.price.value}
         error={formdata.price.ErrorMessage}
@@ -37,7 +61,7 @@ const TicketForm = ({ formdata, setFormData, SubmitHanlder }: FormProps) => {
         type="submit"
         className="px-5 text-lg font-medium py-3 hover:bg-purple-700 bg-purple-500 rounded-lg text-white "
       >
-        Create
+        {btnText}{" "}
       </button>
     </form>
   );

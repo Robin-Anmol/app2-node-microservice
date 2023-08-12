@@ -33,6 +33,7 @@ const Header = ({ currentUser }: headerProps) => {
             {currentUser.email}
           </button>
         )}
+
         {currentUser?.email && !router.pathname.includes("/auth") ? (
           <button
             onClick={logouthandler}

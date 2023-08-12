@@ -43,8 +43,6 @@ router
         .withMessage("title is invalid. it should be a string "),
       body("price")
         .optional()
-        .not()
-        .isString()
         .isFloat({ gt: 0 })
         .notEmpty()
         .withMessage(
@@ -53,6 +51,7 @@ router
     ],
     validateRequest,
     TicketByIdController.updateTicketById
-  );
+  )
+  .delete(isAuthenticated, TicketByIdController.deleteTicketById);
 
 export { router as TicketRouter };

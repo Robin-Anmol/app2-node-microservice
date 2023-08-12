@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Errors } from "../auth";
 import { useRouter } from "next/router";
 import Form from "@/components/form";
-import TicketForm from "@/components/ticketForm";
+import TicketForm from "@/components/ticketForm/form";
 import { TicketService } from "@/services";
+import { CurrentUser } from "@/pages/_app";
+import { Errors } from "@/pages/auth";
 
 export interface ticketformdataProps {
   title: {
@@ -16,7 +17,12 @@ export interface ticketformdataProps {
   };
 }
 
-const CreateTicketPage = () => {
+interface CreateTicketPageProps {
+  currentUser: CurrentUser;
+}
+const CreateTicketPage = ({ currentUser }: CreateTicketPageProps) => {
+  const router = useRouter();
+
   const [formdata, setFormData] = useState<ticketformdataProps>({
     title: {
       value: "",
@@ -27,7 +33,6 @@ const CreateTicketPage = () => {
   });
 
   const [errors, setErrors] = useState<Errors[]>([]);
-  const router = useRouter();
 
   const SubmitHanlder = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -67,6 +72,11 @@ const CreateTicketPage = () => {
     });
   }, [errors]);
 
+  useEffect(() => {
+    if (!currentUser) {
+      router.replace("/auth?redirect=tickets");
+    }
+  }, [currentUser, router]);
   function updateErrorState(errors: Errors[]) {
     setErrors([]);
     errors.map((err: Errors) => {
@@ -105,6 +115,7 @@ const CreateTicketPage = () => {
           Create New Ticket for Events
         </h1>
         <TicketForm
+          btnText={"Create"}
           formdata={formdata}
           setFormData={setFormData}
           SubmitHanlder={SubmitHanlder}

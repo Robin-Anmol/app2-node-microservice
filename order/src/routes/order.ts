@@ -28,6 +28,6 @@ router
 router
   .route("/orders/:orderId")
   .get(isAuthenticated, getOrderByIdController.getOrderById)
-  .delete(isAuthenticated, getOrderByIdController.deleteOrderById);
+  .patch(isAuthenticated, getOrderByIdController.cancelledOrderById);
 
 export { router as OrderRouter };

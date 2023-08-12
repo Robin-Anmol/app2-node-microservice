@@ -80,4 +80,36 @@ async function updateTicketById(
   }
 }
 
-export const TicketByIdController = { getTicketById, updateTicketById };
+async function deleteTicketById(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const { ticketId } = req.params;
+  try {
+    const isTicketExit = await Tickets.findOne({ _id: ticketId });
+    if (!isTicketExit) {
+      throw new NotFoundError();
+    }
+
+    if (isTicketExit.orderId) {
+      throw new BadRequestError("ticket is reserved.");
+    }
+
+    if (isTicketExit.userId !== req.user?.id) {
+      throw new UnauthorizedError();
+    }
+
+    const deleteTicket = await Tickets.findOneAndDelete({ _id: ticketId });
+    console.log(deleteTicket);
+    res.status(204).json();
+  } catch (error) {
+    next(error);
+  }
+}
+
+export const TicketByIdController = {
+  getTicketById,
+  updateTicketById,
+  deleteTicketById,
+};
