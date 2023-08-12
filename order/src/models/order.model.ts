@@ -38,6 +38,7 @@ const OrdersSchema = new mongoose.Schema<OrdersAttrs>(
     expiresAt: {
       type: mongoose.Schema.Types.Date,
     },
+
     ticket: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Ticket",
@@ -45,6 +46,7 @@ const OrdersSchema = new mongoose.Schema<OrdersAttrs>(
     },
   },
   {
+    timestamps: true,
     toJSON: {
       transform(doc, ret) {
         ret.id = ret._id;
@@ -60,5 +62,4 @@ OrdersSchema.statics.build = (attrs: OrdersAttrs) => {
   return new Orders(attrs);
 };
 const Orders = mongoose.model<OrdersDoc, OrdersModel>("Orders", OrdersSchema);
-
 export { Orders, OrderStatus };

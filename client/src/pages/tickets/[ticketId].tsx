@@ -39,7 +39,7 @@ const TicketById = ({ tickets, error, currentUser }: TicketByIdProps) => {
 
   const OrderCreatedHanlder = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(`Create Order`);
+    // console.log(`Create Order`);
     CreateOrder();
   };
 
@@ -47,13 +47,14 @@ const TicketById = ({ tickets, error, currentUser }: TicketByIdProps) => {
     const { response, errors } = await OrderService.createOrder({
       ticketId: tickets.id,
     });
-    console.log(response?.data.id);
+    // console.log(response?.data.id);
     if (response && response.data.id) {
       return router.replace(`/orders/${response?.data.id}`);
     }
 
     if (errors) {
-      alert(errors[0].message);
+      router.push(`/auth?redirect=\/tickets/${tickets.id}`);
+      alert(`${errors[0].message}\nredirecting to login page`);
     }
   }
 
@@ -73,7 +74,7 @@ const TicketById = ({ tickets, error, currentUser }: TicketByIdProps) => {
 
   const SubmitHanlder = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formdata);
+    // console.log(formdata);
     updateTicketById();
   };
 
@@ -172,10 +173,15 @@ const TicketById = ({ tickets, error, currentUser }: TicketByIdProps) => {
               </h3>
             </div>
             <button
+              disabled={tickets.orderId ? true : false}
               type="submit"
-              className="px-5  text-lg font-medium py-3 hover:bg-purple-700 bg-purple-500 rounded-lg text-white "
+              className={`"px-5  text-lg font-medium py-3 ${
+                tickets.orderId
+                  ? "bg-gray-500  cursor-not-allowed"
+                  : "hover:bg-purple-700 bg-purple-500"
+              } rounded-lg text-white "`}
             >
-              Purchase
+              {tickets.orderId ? "Reserved" : "Purchase"}
             </button>
           </form>
         </div>
@@ -190,7 +196,7 @@ TicketById.getInitialProps = async (ctx: NextPageContext) => {
   let tickets = {};
   let error = null;
   try {
-    console.log(ctx);
+    // console.log(ctx);
     const client = buildClient(ctx);
     const response = await client.get(`/api/tickets/${ctx.query.ticketId}`);
 

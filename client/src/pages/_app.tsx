@@ -26,6 +26,10 @@ export default function App({
   currentUser,
   errors,
 }: AppPageProps) {
+  if (!process.env.STRIPE_PUBLIC_KEY) {
+    console.log("stripe key is missing");
+  }
+
   return (
     <div className="w-full h-full">
       <Header currentUser={currentUser} />
@@ -43,7 +47,6 @@ App.getInitialProps = async (appContext: AppContext) => {
     if (appContext.Component.getInitialProps) {
       pageProps = await appContext.Component.getInitialProps(appContext.ctx);
     }
-
     const client = buildClient(appContext.ctx);
     const response = await client.get("/api/users/currentuser");
     currentUser = { ...response.data.currentUser };

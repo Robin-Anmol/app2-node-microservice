@@ -12,7 +12,9 @@ async function getAllTicketController(
   next: NextFunction
 ) {
   try {
-    const ticket = await Tickets.find({});
+    const ticket = await Tickets.find({
+      orderId: undefined,
+    });
     if (!ticket) {
       throw new NotFoundError();
     }

@@ -49,7 +49,7 @@ export default function LandingPage({
                        hover:bg-purple-700 transition-colors text-white bg-purple-500
                 rounded-lg  shadow-sm`}
           >
-            Create Ticket
+            Create Tickets
           </button>
         </div>
         <div className="w-full grid gap-4 justify-between grid-col-1 md:grid-cols-3 lg:grid-cols-4">

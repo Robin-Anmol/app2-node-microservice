@@ -3,7 +3,7 @@ import { formTypeData, formTypes } from "@/pages/auth";
 import { UserService } from "@/services";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface headerProps {
   currentUser: CurrentUser;
@@ -16,7 +16,6 @@ const Header = ({ currentUser }: headerProps) => {
     router.push("/auth");
   }
 
-  console.log(currentUser);
   return (
     <div className="w-full px-[10%] mx-auto h-16 flex py-3 border-b shadow-lg border-grey-500 ">
       <Link href={"/"}>
@@ -31,6 +30,16 @@ const Header = ({ currentUser }: headerProps) => {
                 rounded-lg  shadow-sm`}
           >
             {currentUser.email}
+          </button>
+        )}
+        {currentUser?.email && (
+          <button
+            onClick={() => router.push("/orders")}
+            className={`px-5 whitespace-nowrap h-full    
+                      transition-colors text-black border border-black
+                rounded-lg  shadow-sm`}
+          >
+            My Orders
           </button>
         )}
 

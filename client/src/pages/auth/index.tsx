@@ -39,7 +39,7 @@ const AuthPage = () => {
 
   const SubmitHanlder = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formdata);
+    // console.log(formdata);
 
     switch (formType) {
       case formTypes.SignIn:
@@ -93,8 +93,8 @@ const AuthPage = () => {
   useEffect(() => {
     errors.map((err: Errors) => {
       setFormData((prev) => {
-        console.log(prev);
-        console.log(err);
+        // console.log(prev);
+        // console.log(err);
         return {
           ...prev,
           [err.field]: {
