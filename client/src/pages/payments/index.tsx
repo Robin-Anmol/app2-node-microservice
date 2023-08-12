@@ -8,7 +8,7 @@ import {
 import CheckoutForm from "@/components/Checkoutform";
 import { loadStripe } from "@stripe/stripe-js";
 import { useRouter } from "next/router";
-const stripePromise = loadStripe("");
+const stripePromise = loadStripe(process.env.STRIPE_PUBLIC_KEY!);
 const PaymentPage = () => {
   const router = useRouter();
   const orderId = router.query?.orderId as string | "";

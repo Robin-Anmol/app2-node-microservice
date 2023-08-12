@@ -26,10 +26,6 @@ export default function App({
   currentUser,
   errors,
 }: AppPageProps) {
-  if (!process.env.STRIPE_PUBLIC_KEY) {
-    console.log("stripe key is missing");
-  }
-
   return (
     <div className="w-full h-full">
       <Header currentUser={currentUser} />
