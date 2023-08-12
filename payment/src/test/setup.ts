@@ -10,9 +10,8 @@ declare global {
   var signin: (id?: string) => string[];
 }
 // put the original stripe key which you get from stripe dashboard
-process.env.STRIPE_SECRET_KEY = "";
+
 beforeAll(async () => {
-  process.env.JWT_KEY = "sfdhgsjdfhj";
   mongo = await MongoMemoryServer.create();
   const mongoUri = mongo.getUri();
   await mongoose.connect(mongoUri);
