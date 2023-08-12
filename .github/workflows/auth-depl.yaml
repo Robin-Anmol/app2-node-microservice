@@ -3,7 +3,7 @@ name: auth-deployment
 on:
   push:
     branches:
-      -  master
+      -  development
     paths:
       - 'auth/**'
 
